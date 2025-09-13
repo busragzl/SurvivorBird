@@ -1,4 +1,4 @@
-package com.atilsamancioglu.survivorbirdstarter;
+package com.busragazel.survivorbird;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.Texture;
