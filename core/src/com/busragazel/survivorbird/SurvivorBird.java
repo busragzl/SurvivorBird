@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import java.util.Random;
+
 public class SurvivorBird extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture background;
@@ -16,20 +18,20 @@ public class SurvivorBird extends ApplicationAdapter {
 
 	float birdX = 0;
 	float birdY = 0;
-
 	int gameState = 0;
-
 	float velocity = 0;
-
 	float gravity = 0.1f;
-
-
 	int numberOfEnemies = 4;
 	float [] enemyX = new float[numberOfEnemies];
-
+	float [] enemyOffset = new float[numberOfEnemies];
+	float[] enemyOffset2  =new float[numberOfEnemies];
+	float[] enemyOffset3  =new float[numberOfEnemies];
 	float distance = 0;
-
 	float enemyVelocity = 2;
+
+	Random random;
+
+
 
 
 
@@ -48,14 +50,17 @@ public class SurvivorBird extends ApplicationAdapter {
 
 		//Ufolar arasında ekranın yarısı kadar mesafe eklemek için oluşturuldu
 		distance = Gdx.graphics.getWidth() / 2;
-
-
-
+		random = new Random();
 		birdX = Gdx.graphics.getWidth() / 6;
 		birdY = Gdx.graphics.getHeight() / 3;
 
 
 		for(int i = 0 ;i<numberOfEnemies; i++){
+
+
+			enemyOffset[i] = (random.nextFloat() - 0.5f)*(Gdx.graphics.getHeight() - 200);
+			enemyOffset2[i] = (random.nextFloat()- 0.5f)*(Gdx.graphics.getHeight() - 200);
+			enemyOffset3[i] = (random.nextFloat()- 0.5f)*(Gdx.graphics.getHeight() - 200);
 
 			//Her oluşan ufo setinin x'i  kendi distancesine göre ayarlanmış olucak
 
@@ -86,15 +91,21 @@ public class SurvivorBird extends ApplicationAdapter {
 			for(int i = 0 ; i < numberOfEnemies ; i++){
 
 				if(enemyX[i] < Gdx.graphics.getWidth()/14){
+
                     enemyX[i] = enemyX[i] + numberOfEnemies * distance;
+
+					enemyOffset[i] = (random.nextFloat() - 0.5f)*(Gdx.graphics.getHeight() - 200);
+					enemyOffset2[i] = (random.nextFloat()- 0.5f)*(Gdx.graphics.getHeight() - 200);
+					enemyOffset3[i] = (random.nextFloat()- 0.5f)*(Gdx.graphics.getHeight() - 200);
+
 				}else{
 					enemyX[i] = enemyX[i] - enemyVelocity;
 				}
 
 
-				batch.draw(ufo1,enemyX[i],50,Gdx.graphics.getWidth()/14,Gdx.graphics.getHeight()/8);
-				batch.draw(ufo2,enemyX[i],200,Gdx.graphics.getWidth()/14,Gdx.graphics.getHeight()/8);
-				batch.draw(ufo3,enemyX[i],400,Gdx.graphics.getWidth()/14,Gdx.graphics.getHeight()/8);
+				batch.draw(ufo1,enemyX[i],Gdx.graphics.getHeight()/2 + enemyOffset[i],Gdx.graphics.getWidth()/14,Gdx.graphics.getHeight()/8);
+				batch.draw(ufo2,enemyX[i],Gdx.graphics.getHeight()/2 + enemyOffset2[i],Gdx.graphics.getWidth()/14,Gdx.graphics.getHeight()/8);
+				batch.draw(ufo3,enemyX[i],Gdx.graphics.getHeight()/2 + enemyOffset3[i],Gdx.graphics.getWidth()/14,Gdx.graphics.getHeight()/8);
 
 
 			}
@@ -117,7 +128,7 @@ public class SurvivorBird extends ApplicationAdapter {
 		}
 
 
-		batch.draw(bird,birdX,birdY,Gdx.graphics.getWidth()/14,Gdx.graphics.getHeight()/8);
+		batch.draw(bird,birdX,birdY,Gdx.graphics.getWidth()/18,Gdx.graphics.getHeight()/10);
 
 
 		batch.end();
